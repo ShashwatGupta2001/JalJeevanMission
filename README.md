@@ -1,4 +1,4 @@
-# Jal-Jeevan-Mission-IoT-Lab-IIT-Kanpur-
+# Jal-Jeevan-Mission-IoT-Lab-IIT-Kanpur
 # Jal Jeevan Mission App
 
 The Jal Jeevan Mission (JJM) Mobile App, crafted at IIT Kanpur, emerges as a pioneering solution facilitating real-time detection and alerts for water leakages. It stands as a testament to innovation and technology merging for a noble cause. Here's why it's a game-changer:
