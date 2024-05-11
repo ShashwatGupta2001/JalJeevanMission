@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jjm_app_iitk_iot_lab/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'JJM IIT-K'),
+      home: const SplashScreen(),
     );
   }
 }
