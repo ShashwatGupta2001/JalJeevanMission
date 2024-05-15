@@ -9,17 +9,14 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: LottieBuilder.asset(
-            "assets/Flow.json",
-            // Use MediaQuery to get screen dimensions
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            fit: BoxFit.contain, // Ensure animation fits within screen
-            animate: true,
-          ),
+      splash: Center(
+        child:
+         LottieBuilder.asset(
+          "assets/Flow.json",
+          width: MediaQuery.of(context).devicePixelRatio * 150.0,
+          height: MediaQuery.of(context).devicePixelRatio * 750.0,
+          fit: BoxFit.cover,
+          animate: true,
         ),
       ),
       nextScreen: const MyApp(),
@@ -28,3 +25,4 @@ class SplashScreen extends StatelessWidget {
     );
   }
 }
+
