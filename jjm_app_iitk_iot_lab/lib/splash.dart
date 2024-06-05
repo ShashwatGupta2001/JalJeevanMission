@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:lottie/lottie.dart';
-import 'main.dart';
+import 'map.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}); // Adjusted constructor

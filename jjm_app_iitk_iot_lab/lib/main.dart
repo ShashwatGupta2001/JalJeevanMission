@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'splash.dart';
+import 'map.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,13 +20,27 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SecondScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => SecondScreen()),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:Text("JJM")),
       body: Center(
-        child: Text("Home page",textScaleFactor: 2,),
+        child: CircularProgressIndicator(),
       ),
     );
   }
