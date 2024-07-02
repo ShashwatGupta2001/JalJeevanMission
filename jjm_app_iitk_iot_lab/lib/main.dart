@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'map.dart';
+import 'splash.dart';
+import 'login.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: SplashScreen(), // Using SplashScreen as the home screen
+      home: CustomSplashScreen(), // Changed to CustomSplashScreen
       debugShowCheckedModeBanner: false,
     );
   }
@@ -31,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => SecondScreen()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
       );
     });
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:lottie/lottie.dart';
-import 'map.dart';
+import 'login.dart'; // Make sure to import your map.dart file correctly
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}); // Adjusted constructor
+class CustomSplashScreen extends StatelessWidget {
+  const CustomSplashScreen({Key? key}); // Adjusted constructor
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +17,17 @@ class SplashScreen extends StatelessWidget {
             children: [
               Lottie.asset(
                 "assets/Flow.json",
-                width: MediaQuery.of(context).size.width * 0.75, // Adjust size as needed
-                height: MediaQuery.of(context).size.height * 0.75, // Adjust size as needed
+                width: MediaQuery.of(context).size.width * 0.75,
+                height: MediaQuery.of(context).size.height * 0.75,
                 fit: BoxFit.cover,
-                animate: true, // Double the speed
-                repeat: false, // Play animation only once
+                animate: true,
+                repeat: false,
               ),
             ],
           ),
         ),
       ),
-      nextScreen: SecondScreen(), // Navigate to SecondScreen after splash
+      nextScreen: LoginPage(),
       splashIconSize: 400,
       backgroundColor: Color.fromARGB(255, 107, 81, 223),
     );
