@@ -101,7 +101,7 @@ class MapUserState extends State<MapUserPage> {
             ),
           ),
           Positioned(
-            bottom: 80,
+            bottom: 20, // Adjust this value to move the button further down
             left: 20,
             right: 20,
             child: ElevatedButton(

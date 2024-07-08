@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
@@ -14,11 +13,12 @@ TileLayer get openStreetMapTileLayer => TileLayer(
   tileProvider: CancellableNetworkTileProvider(),
 );
 
-
 class MapPage extends StatefulWidget {
   static const String route = '/second_screen';
+  final double? latitude;
+  final double? longitude;
 
-  const MapPage({Key? key}) : super(key: key);
+  const MapPage({Key? key, this.latitude, this.longitude}) : super(key: key);
 
   @override
   MapState createState() => MapState();
@@ -26,12 +26,22 @@ class MapPage extends StatefulWidget {
 
 class MapState extends State<MapPage> {
   final mapController = MapController();
-
-  List<LatLng> markers = [];
+  LatLng? complaintLocation;
+  LatLng? currentLocation;
+  List<Marker> markers = [];
 
   @override
   void initState() {
     super.initState();
+    if (widget.latitude != null && widget.longitude != null) {
+      complaintLocation = LatLng(widget.latitude!, widget.longitude!);
+      markers.add(_buildMarker(complaintLocation!, Icons.location_pin, Colors.red));
+      Future.delayed(Duration(milliseconds: 500), () {
+        if (mounted) {
+          mapController.move(complaintLocation!, 15.0);
+        }
+      });
+    }
   }
 
   @override
@@ -44,44 +54,16 @@ class MapState extends State<MapPage> {
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
-              onTap: _handleTap,
-              initialCenter: const LatLng(51.5, -0.09),
+              initialCenter: complaintLocation ?? const LatLng(51.5, -0.09),
               initialZoom: 5,
               minZoom: 3,
             ),
             children: [
               openStreetMapTileLayer,
               MarkerLayer(
-                markers: markers.map((latLng) => Marker(
-                  width: 65,
-                  height: 65,
-                  point: latLng,
-                  child: const Icon(
-                    Icons.circle,
-                    size: 10,
-                    color: Colors.black,
-                  ),
-                )).toList(),
+                markers: markers,
               ),
             ],
-          ),
-          Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: IgnorePointer(
-              child: Column(
-                children: markers.map((latLng) => Text(
-                  '(${latLng.latitude.toStringAsFixed(3)}, ${latLng.longitude.toStringAsFixed(3)})',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                )).toList(),
-              ),
-            ),
           ),
           Positioned(
             top: 10,
@@ -96,19 +78,47 @@ class MapState extends State<MapPage> {
     );
   }
 
-  void _handleTap(TapPosition tapPosition, LatLng latLng) {
-    setState(() {
-      markers.add(latLng);
-    });
+  Marker _buildMarker(LatLng point, IconData icon, Color color) {
+    return Marker(
+      width: 65,
+      height: 65,
+      point: point,
+      child: Icon(
+        icon,
+        size: 30,
+        color: color,
+      ),
+    );
   }
 
   Future<void> _getCurrentLocation() async {
     if (await Permission.location.request().isGranted) {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      final LatLng currentLatLng = LatLng(position.latitude, position.longitude);
-      mapController.move(currentLatLng, 15.0);
+      currentLocation = LatLng(position.latitude, position.longitude);
+
+      // Calculate the midpoint between the complaint location and the current location
+      final centerLat = (complaintLocation!.latitude + currentLocation!.latitude) / 2;
+      final centerLng = (complaintLocation!.longitude + currentLocation!.longitude) / 2;
+      final centerPoint = LatLng(centerLat, centerLng);
+
+      // Calculate the distance between the two points
+      final distance = Distance().as(LengthUnit.Kilometer, complaintLocation!, currentLocation!);
+
+      // Set an appropriate zoom level based on the distance
+      double zoomLevel = 15.0;
+      if (distance > 2) {
+        zoomLevel = 12.0;
+      } else if (distance > 1) {
+        zoomLevel = 14.0;
+      }
+
+      mapController.move(centerPoint, zoomLevel);
+
       setState(() {
-        markers.add(currentLatLng);
+        markers = [
+          _buildMarker(complaintLocation!, Icons.location_pin, Colors.red),
+          _buildMarker(currentLocation!, Icons.circle, Colors.blue),
+        ];
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
