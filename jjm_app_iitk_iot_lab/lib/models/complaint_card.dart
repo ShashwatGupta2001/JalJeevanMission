@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/complaint.dart'; // Import the Complaint class
+import '../map.dart';
 
 class ComplaintCard extends StatelessWidget {
   final Complaint complaint;
@@ -48,10 +49,15 @@ class ComplaintCard extends StatelessWidget {
                   right: 10,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/map-user', arguments: {
-                        'latitude': complaint.latitude,
-                        'longitude': complaint.longitude,
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MapPage(
+                            latitude: double.parse(complaint.latitude),
+                            longitude: double.parse(complaint.longitude),
+                          ),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
