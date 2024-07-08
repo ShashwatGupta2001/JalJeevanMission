@@ -74,7 +74,7 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
                     children: <Widget>[
                       Text('Latitude: ', style: TextStyle(fontSize: 15.0)),
                       Text(
-                        widget.latitude,
+                        double.parse(widget.latitude).toStringAsFixed(4), // Display latitude rounded to 4 decimal points
                         style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(width: 12.0),
@@ -82,7 +82,7 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
                       SizedBox(width: 12.0),
                       Text('Longitude: ', style: TextStyle(fontSize: 15.0)),
                       Text(
-                        widget.longitude,
+                        double.parse(widget.longitude).toStringAsFixed(4), // Display longitude rounded to 4 decimal points
                         style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -261,7 +261,7 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
                     alignment: Alignment.center,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(context, '/map-user', (route) => false);
                       },
                       child: Text('OK'),
                     ),
