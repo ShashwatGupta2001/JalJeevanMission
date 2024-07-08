@@ -96,23 +96,7 @@ class MapState extends State<MapPage> {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       currentLocation = LatLng(position.latitude, position.longitude);
 
-      // Calculate the midpoint between the complaint location and the current location
-      final centerLat = (complaintLocation!.latitude + currentLocation!.latitude) / 2;
-      final centerLng = (complaintLocation!.longitude + currentLocation!.longitude) / 2;
-      final centerPoint = LatLng(centerLat, centerLng);
-
-      // Calculate the distance between the two points
-      final distance = Distance().as(LengthUnit.Kilometer, complaintLocation!, currentLocation!);
-
-      // Set an appropriate zoom level based on the distance
-      double zoomLevel = 15.0;
-      if (distance > 2) {
-        zoomLevel = 12.0;
-      } else if (distance > 1) {
-        zoomLevel = 14.0;
-      }
-
-      mapController.move(centerPoint, zoomLevel);
+      mapController.move(currentLocation!, 15.0); // Move map directly to current location
 
       setState(() {
         markers = [
