@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/complaint.dart'; // Import the Complaint class
 import 'remarks_dialog.dart';
-
+import '../map.dart';
 class ComplaintDetailsScreen extends StatelessWidget {
   final Complaint complaint;
-
-  ComplaintDetailsScreen({required this.complaint});
-
+  
+  ComplaintDetailsScreen({required this.complaint,});
+  
   void showRemarksDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -50,27 +50,50 @@ class ComplaintDetailsScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    buildActionButton(
-                      context,
-                      icon: Icons.map,
-                      label: 'View Map',
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context, 
-                          '/map-user', 
-                          arguments: {
-                            'latitude': complaint.latitude,
-                            'longitude': complaint.longitude,
-                          }
-                        );
-                      },
+                     Expanded(
+            child: ElevatedButton(
+              onPressed: () => _showRemarksDialog(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Button color
+                foregroundColor: Colors.white, // Text color
+               padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),),
+              child: Text("View All Remarks"),
+            ),
+          ),
+          SizedBox(width: 8), // Add spacing between buttons
+          Expanded(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MapPage(
+                      latitude: double.parse(complaint.latitude),
+                            longitude: double.parse(complaint.longitude), // Replace with your longitude
                     ),
-                    buildActionButton(
-                      context,
-                      icon: Icons.comment,
-                      label: 'Remarks',
-                      onPressed: () => showRemarksDialog(context),
-                    ),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Button color
+                foregroundColor: Colors.white, // Text color
+              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), ),
+              child: Text("View this on Map"),
+            ),
+          ),
+          SizedBox(width: 8), // Add spacing between buttons
+          Expanded(
+            child: ElevatedButton(
+              
+              onPressed: () => showRemarksDialog,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Button color
+                foregroundColor: Colors.white,
+                 padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), 
+              ),
+              child: Text("Update Your Remark"),
+            ),
+          ),
                   ],
                 ),
               ],
@@ -100,4 +123,38 @@ class ComplaintDetailsScreen extends StatelessWidget {
       onPressed: onPressed,
     );
   }
+  void _showRemarksDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('All Remarks'),
+          content: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: DataTable(
+              columns: [
+                DataColumn(label: Text('User Name')),
+                DataColumn(label: Text('Remarks')),
+              ],
+              rows: List.generate(20, (index) { // Generate sample data
+                return DataRow(cells: [
+                  DataCell(Text('User ${index + 1}')),
+                  DataCell(Text('Remark ${index + 1}')),
+                ]);
+              }),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
 }
