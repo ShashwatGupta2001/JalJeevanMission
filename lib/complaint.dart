@@ -1,7 +1,8 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-
+import 'package:file_picker/file_picker.dart';
+import 'dart:html' as html; // For Flutter Web
+import 'dart:convert';
 class RaiseComplaintScreen extends StatefulWidget {
   final String latitude;
   final String longitude;
@@ -16,12 +17,8 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
   final _formKey = GlobalKey<FormState>();
   String _address = '';
   String _description = '';
-  File? _imageFile;
-  double? _imageWidth;
-  double? _imageHeight;
+  Uint8List? _imageData;
   bool _isSubmitting = false; // Track if form submission is in progress
-
-  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -39,28 +36,31 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
               children: <Widget>[
                 GestureDetector(
                   onTap: () => _showImageSourceDialog(),
-                  child: _imageFile == null
+                  child: _imageData == null
                       ? Container(
-                    height: 150,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Icon(Icons.add_a_photo, size: 54, color: Colors.grey),
-                    ),
-                  )
+                          height: 150,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Icon(Icons.add_a_photo, size: 54, color: Colors.grey),
+                          ),
+                        )
                       : Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Image.file(_imageFile!),
-                    ),
-                  ),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Image.memory(
+                              _imageData!,
+                           // Set the desired height
+                            ),
+                          ),
+                        ),
                 ),
                 SizedBox(height: 18.0),
                 Container(
@@ -132,7 +132,22 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
       ),
     );
   }
-
+String encodeImageToBase64(Uint8List imageData) {
+  return base64Encode(imageData);
+}
+Map<String, dynamic> complaintToJson(String latitude, String longitude, String address, String description, Uint8List imageData) {
+  return {
+    'complaint': {
+      'latitude': latitude,
+      'longitude': longitude,
+      'address': address,
+      'description': description,
+      'image': {
+        'base64': base64Encode(imageData),
+      },
+    },
+  };
+}
   void _showImageSourceDialog() {
     showDialog(
       context: context,
@@ -150,7 +165,7 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
                 leading: Icon(Icons.camera),
                 title: Text('Click a picture'),
                 onTap: () {
-                  _pickImage(ImageSource.camera);
+                  _pickImage();
                   Navigator.pop(context);
                 },
               ),
@@ -165,7 +180,7 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
                 leading: Icon(Icons.photo_album),
                 title: Text('Choose a picture'),
                 onTap: () {
-                  _pickImage(ImageSource.gallery);
+                  _pickImage();
                   Navigator.pop(context);
                 },
               ),
@@ -176,29 +191,36 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
     );
   }
 
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(source: source);
-    if (pickedFile != null) {
-      final image = File(pickedFile.path);
-
+  Future<void> _pickImage() async {
+    final result = await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null) {
+      final fileBytes = result.files.single.bytes;
       setState(() {
-        _imageFile = image;
+        _imageData = fileBytes;
       });
-
     }
   }
 
   void _submitForm() async {
     if (_formKey.currentState?.validate() ?? false) {
-      if (_imageFile == null) {
+      if (_imageData == null) {
         _showErrorDialog('Image Not Added', 'Please add an image of your complaint.', 'Add Image');
         return;
       }
-
+       else {
+    final complaintJson = complaintToJson(
+      widget.latitude,
+      widget.longitude,
+      _address,
+      _description,
+      _imageData!,
+    );}
       setState(() {
         _isSubmitting = true;
       });
-
+     
+     
+     
       // Show a loading spinner
       showDialog(
         context: context,
@@ -247,11 +269,11 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
                         SizedBox(height: 9),
                         Text('Description:', style: TextStyle(fontWeight: FontWeight.bold)),
                         Text(_description),
-                        if (_imageFile != null) ...[
+                        if (_imageData != null) ...[
                           SizedBox(height: 9),
                           Text('Complaint Image:', style: TextStyle(fontWeight: FontWeight.bold)),
                           SizedBox(height: 9),
-                          Image.file(_imageFile!),
+                          Image.memory(_imageData!),
                         ],
                       ],
                     ),
@@ -266,7 +288,6 @@ class _RaiseComplaintScreenState extends State<RaiseComplaintScreen> {
                       child: Text('OK'),
                     ),
                   ),
-                  // SizedBox(height: 10), // Adjust spacing as needed
                 ],
               ),
             ),

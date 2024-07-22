@@ -14,6 +14,7 @@ class _RemarksDialogState extends State<RemarksDialog> {
   void _submitRemarks() {
     if (_formKey.currentState!.validate()) {
       // Handle the remarks submission logic here
+      
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Remarks submitted successfully')),

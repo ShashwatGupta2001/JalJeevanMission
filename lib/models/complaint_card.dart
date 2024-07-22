@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../models/complaint.dart'; // Import the Complaint class
 import '../map.dart';
 import 'progress.dart';
-class ComplaintCard extends StatelessWidget {
+
+class ComplaintCard extends StatefulWidget {
   final Complaint complaint;
   final void Function(Complaint) onDetailsTap;
   final void Function(BuildContext) onRemarksTap;
-
+  
   ComplaintCard({
     required this.complaint,
     required this.onDetailsTap,
     required this.onRemarksTap,
+    
   });
 
   @override
+  _ComplaintCardState createState() => _ComplaintCardState();
+}
+
+class _ComplaintCardState extends State<ComplaintCard> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onDetailsTap(complaint),
-      
+      onTap: () => widget.onDetailsTap(widget.complaint),
       child: Card(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         elevation: 5,
-        
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(9),
         ),
@@ -36,7 +40,7 @@ class ComplaintCard extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Image.network(
-                      complaint.image,
+                      widget.complaint.image,
                       fit: BoxFit.cover,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -47,7 +51,6 @@ class ComplaintCard extends StatelessWidget {
                     ),
                   ),
                 ),
-               
               ],
             ),
             Padding(
@@ -56,76 +59,98 @@ class ComplaintCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    complaint.address,
+                    widget.complaint.address,
                     style: TextStyle(fontWeight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 6),
                   Text(
-                    complaint.description,
+                    widget.complaint.description,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-             
                   SizedBox(height: 6),
                   Text(
-                    "Your Remark : "+complaint.user_remarks,
+                    "Your Remark : " + widget.complaint.user_remarks,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
-                 SizedBox(height: 6),
-                ComplaintProgress(currentStage: complaint.Complaint_status),
-                SizedBox(height: 6),
-                Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () => _showRemarksDialog(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
-                foregroundColor: Colors.white, // Text color
-               padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),),
-              child: Text("View All Remarks"),
-            ),
-          ),
-          SizedBox(width: 8), // Add spacing between buttons
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MapPage(
-                      latitude: double.parse(complaint.latitude),
-                            longitude: double.parse(complaint.longitude), // Replace with your longitude
-                    ),
+                  SizedBox(height: 6),
+                  ComplaintProgress(currentStage: widget.complaint.Complaint_status),
+                  SizedBox(height: 6),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => _showRemarksDialog(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue, // Button color
+                            foregroundColor: Colors.white, // Text color
+                            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                          ),
+                          child: Text("View All Remarks"),
+                        ),
+                      ),
+                      SizedBox(width: 8), // Add spacing between buttons
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MapPage(
+                                  latitude: double.parse(widget.complaint.latitude),
+                                  longitude: double.parse(widget.complaint.longitude), // Replace with your longitude
+                                ),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue, // Button color
+                            foregroundColor: Colors.white, // Text color
+                            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                          ),
+                          child: Text("View this on Map"),
+                        ),
+                      ),
+                      SizedBox(width: 8), // Add spacing between buttons
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => widget.onRemarksTap(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue, // Button color
+                            foregroundColor: Colors.white,
+                            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                          ),
+                          child: Text("Update Remark"),
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
-                foregroundColor: Colors.white, // Text color
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), ),
-              child: Text("View this on Map"),
-            ),
-          ),
-          SizedBox(width: 8), // Add spacing between buttons
-          Expanded(
-            child: ElevatedButton(
-              
-              onPressed: () => onRemarksTap(context),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
-                foregroundColor: Colors.white,
-                 padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), 
-              ),
-              child: Text("Update Remark"),
-            ),
-          ),
-        ],
-      ),
+                  SizedBox(height: 6),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              widget.complaint.Complaint_status += 1;
+                              
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue, // Button color
+                            foregroundColor: Colors.white, // Text color
+                            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                          ),
+                          child: Text("Update Complaint Status"),
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -134,7 +159,8 @@ class ComplaintCard extends StatelessWidget {
       ),
     );
   }
-   void _showRemarksDialog(BuildContext context) {
+
+  void _showRemarksDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
