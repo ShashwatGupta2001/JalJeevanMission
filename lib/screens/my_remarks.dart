@@ -93,6 +93,7 @@ class _MyRemarksState extends State<MyRemarks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 21, 80, 129),
       appBar: AppBar(
         title: Text('My Remarks', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
         centerTitle: true,

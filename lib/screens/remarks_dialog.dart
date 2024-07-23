@@ -11,7 +11,7 @@ class _RemarksDialogState extends State<RemarksDialog> {
   final _formKey = GlobalKey<FormState>();
   final _remarksController = TextEditingController();
 
-  void _submitRemarks() {
+  void _submitRemarks(val) {
     if (_formKey.currentState!.validate()) {
       // Handle the remarks submission logic here
       
@@ -19,13 +19,14 @@ class _RemarksDialogState extends State<RemarksDialog> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Remarks submitted successfully')),
       );
-
+   
       // Navigate to the NearbyComplaintsScreen
       Navigator.of(context).pushNamedAndRemoveUntil('/nearby-complaints', (Route<dynamic> route) => false);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter your remarks')),
       );
+      
     }
   }
 
@@ -62,7 +63,7 @@ class _RemarksDialogState extends State<RemarksDialog> {
           child: Text('Cancel'),
         ),
         ElevatedButton(
-          onPressed: _submitRemarks,
+          onPressed: () => _submitRemarks(_remarksController),
           child: Text('Submit Remark'),
         ),
       ],

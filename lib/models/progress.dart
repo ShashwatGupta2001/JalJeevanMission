@@ -28,7 +28,7 @@ class ComplaintProgress extends StatelessWidget {
                     height: 40,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: index <= currentStage ? Colors.blue : Colors.grey,
+                      color: index <= currentStage ? Color.fromARGB(255, 21, 80, 129) : Colors.grey,
                     ),
                     child: Center(
                       child: Text(
@@ -62,7 +62,7 @@ class ComplaintProgress extends StatelessWidget {
                   Expanded(
                     child: Container(
                       height: 2,
-                      color: index < currentStage ? Colors.blue : Colors.grey,
+                      color: index < currentStage ? Color.fromARGB(255, 21, 80, 129) : Colors.grey,
                     ),
                   ),
                   Container(

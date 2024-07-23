@@ -44,17 +44,19 @@ class _ProfilePageState extends State<ProfilePage> {
     //   ),
     //   backgroundColor: Color(0xff024c89),
     // ),
-    body: Center(
+    body: Container(
+      color:Color.fromARGB(255, 21, 80, 129) ,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+        
         child: Column(
           children: [
             // 1st ClipRRect box with profile details and buttons
             ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(50.0),
               child: Container(
-                color: Color(0xff3e6b91),
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
                 child: Column(
                   children: [
                     CircleAvatar(
@@ -67,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 21, 80, 129),
                       ),
                     ),
                     SizedBox(height: 1),
@@ -75,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       phonenumber,
                       style: TextStyle(
                         fontSize: 15,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 21, 80, 129),
                       ),
                     ),
                     SizedBox(height: 16),
@@ -91,13 +93,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                               minimumSize: Size(0, 40),
                               textStyle: TextStyle(fontSize: 10),
+                              backgroundColor: Color.fromARGB(255, 21, 80, 129),
                             ),
                             child: Text(
                               'Change Profile Picture',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff0b3251),
+                                color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
                           ),
@@ -112,13 +115,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                               minimumSize: Size(0, 40),
                               textStyle: TextStyle(fontSize: 10),
+                              backgroundColor: Color.fromARGB(255, 21, 80, 129),
                             ),
                             child: Text(
                               'Change Username',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff0b3251),
+                                color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
                           ),
@@ -133,13 +137,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                               minimumSize: Size(0, 40),
                               textStyle: TextStyle(fontSize: 10),
+                              backgroundColor: Color.fromARGB(255, 21, 80, 129),
                             ),
                             child: Text(
                               'Change Phone-number',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xff0b3251),
+                                color: Color.fromARGB(255, 248, 248, 249),
                               ),
                             ),
                           ),
@@ -153,10 +158,10 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(height: 16), // Add spacing between the two boxes
             // 2nd ClipRRect box with three buttons
             ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(50.0),
               child: Container(
-                color: Color(0xff3e6b91),
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 60.0),
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 60.0),
                 child: Column(
                   children: [
                     ElevatedButton(
@@ -167,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ); // Handle My Complaints action
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Set button color to white
+                        backgroundColor: Color.fromARGB(255, 21, 80, 129), // Set button color to white
                         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                         minimumSize: Size(double.infinity, 40), // Make button full-width
                         textStyle: TextStyle(fontSize: 15),
@@ -177,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff0b3251), // Set text color to blue
+                          color: Color.fromARGB(255, 255, 255, 255), // Set text color to blue
                         ),
                       ),
                     ),
@@ -190,7 +195,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           );// Handle My Remarks action
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Set button color to white
+                        backgroundColor: Color.fromARGB(255, 21, 80, 129), // Set button color to white
                         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                         minimumSize: Size(double.infinity, 40), // Make button full-width
                         textStyle: TextStyle(fontSize: 15),
@@ -200,7 +205,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff0b3251), // Set text color to blue
+                          color: Color.fromARGB(255, 255, 255, 255), // Set text color to blue
                         ),
                       ),
                     ),
@@ -210,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
                        // Handle Log Out action
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Set button color to white
+                        backgroundColor: Color.fromARGB(255, 21, 80, 129), // Set button color to white
                         padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
                         minimumSize: Size(double.infinity, 40), // Make button full-width
                         textStyle: TextStyle(fontSize: 15),
@@ -220,7 +225,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xff0b3251), // Set text color to blue
+                          color: Color.fromARGB(255, 255, 255, 255), // Set text color to blue
                         ),
                       ),
                     ),

@@ -25,10 +25,11 @@ class _ComplaintCardState extends State<ComplaintCard> {
     return GestureDetector(
       onTap: () => widget.onDetailsTap(widget.complaint),
       child: Card(
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+        
         elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(9),
+          borderRadius: BorderRadius.circular(50),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -36,7 +37,7 @@ class _ComplaintCardState extends State<ComplaintCard> {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(9)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
                   child: AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Image.network(
@@ -86,7 +87,7 @@ class _ComplaintCardState extends State<ComplaintCard> {
                         child: ElevatedButton(
                           onPressed: () => _showRemarksDialog(context),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue, // Button color
+                            backgroundColor: Color.fromARGB(255, 21, 80, 129), // Button color
                             foregroundColor: Colors.white, // Text color
                             padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                           ),
@@ -108,7 +109,7 @@ class _ComplaintCardState extends State<ComplaintCard> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue, // Button color
+                            backgroundColor: Color.fromARGB(255, 21, 80, 129), // Button color
                             foregroundColor: Colors.white, // Text color
                             padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                           ),
@@ -120,7 +121,7 @@ class _ComplaintCardState extends State<ComplaintCard> {
                         child: ElevatedButton(
                           onPressed: () => widget.onRemarksTap(context),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue, // Button color
+                            backgroundColor: Color.fromARGB(255, 21, 80, 129), // Button color
                             foregroundColor: Colors.white,
                             padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                           ),
@@ -142,7 +143,7 @@ class _ComplaintCardState extends State<ComplaintCard> {
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue, // Button color
+                            backgroundColor: Color.fromARGB(255, 21, 80, 129), // Button color
                             foregroundColor: Colors.white, // Text color
                             padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
                           ),

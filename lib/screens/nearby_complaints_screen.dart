@@ -91,12 +91,12 @@ class _NearbyComplaintsScreenState extends State<NearbyComplaintsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
-      appBar: AppBar(
-        title: Text('Nearby Complaints', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,),),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
+      backgroundColor: Color.fromARGB(255, 21, 80, 129),
+  //    appBar: AppBar(
+    //    title: Text('Nearby Complaints', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.white),),
+    //    centerTitle: true,
+     //   backgroundColor: Color.fromARGB(255, 21, 80, 129),
+    //  ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : nearbyComplaints.isEmpty

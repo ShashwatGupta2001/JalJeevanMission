@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import  'Profile.dart';
+import 'Profile.dart';
 import 'screens/nearby_complaints_screen.dart';
 import 'map_user.dart';
+import 'analytics.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -30,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static List<Widget> _widgetOptions = <Widget>[
     MapUserPage(),
+    ImageColumnPage(),
     NearbyComplaintsScreen(),
     ProfilePage(),
   ];
@@ -44,8 +47,42 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Navigation Bar'),
-        
+        backgroundColor: Color.fromARGB(255, 21, 80, 129),
+        leading: IconButton(
+          icon: ClipOval(
+            child: SizedBox(
+              width: 40, // Adjust the size as needed
+              height: 40,
+              child: Image.asset('assets/icons/drops.jpg', fit: BoxFit.cover),
+            ),
+          ),
+          onPressed: () {
+            // Handle the icon button press
+          },
+        ),
+        title: Text(
+          'जल जीवन MISSION',
+          style: TextStyle(
+            fontSize: 20, // Adjust the font size as needed
+            fontWeight: FontWeight.bold, // Adjust the font weight as needed
+            color: Colors.white, // Adjust the font color as needed
+          ),
+        ),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: ClipOval(
+              child: SizedBox(
+                width: 40, // Adjust the size as needed
+                height: 40,
+                child: Image.asset('assets/icons/iitk.jpg', fit: BoxFit.cover),
+              ),
+            ),
+            onPressed: () {
+              // Handle the icon button press
+            },
+          ),
+        ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -57,6 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Map',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.analytics),
+            label: 'Analytics',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Complaints near me',
           ),
@@ -66,20 +107,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color.fromARGB(255, 21, 80, 129),
+        unselectedItemColor: Colors.grey, // Make unselected icons visible
         onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Home Screen',
-        style: TextStyle(fontSize: 24),
       ),
     );
   }

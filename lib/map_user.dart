@@ -44,8 +44,7 @@ class MapUserState extends State<MapUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Map')),
-      drawer: const MenuDrawer('/admin_dashboard'),
+   
       body: Stack(
         children: [
           FlutterMap(
